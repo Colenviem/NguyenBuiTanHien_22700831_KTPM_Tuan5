@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    build: .             # Chỉ đường dẫn đến thư mục chứa Dockerfile
+    ports:
+      - "3000:3000"      # Map cổng máy host 3000 vào cổng container 3000
+    volumes:
+      - .:/app           # Đồng bộ code từ máy host vào container (Hot reload)
+      - /app/node_modules # Không ghi đè thư viện từ host vào container
+    environment:
+      - NODE_ENV=development
