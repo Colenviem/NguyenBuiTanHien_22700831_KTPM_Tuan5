@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # Dịch vụ Cơ sở dữ liệu Postgres
+  db-postgres:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  # Dịch vụ Quản lý Adminer (Giao diện Web)
+  adminer:
+    image: adminer
+    container_name: adminer_ui
+    restart: always
+    ports:
+      - "8083:8080" # Máy thật (8083) -> Container (8080)
+    depends_on:
+      - db-postgres
+
+volumes:
+  pg_data:
